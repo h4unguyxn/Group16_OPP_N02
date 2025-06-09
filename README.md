@@ -20,10 +20,14 @@ Yêu cầu:
 
 - Sinh viên có thể thêm các chức năng vào chương trình để ứng dụng phong phú hơn bằng cách thêm các nghiệp vụ cho bài toán (tùy chọn)
 
+Nội dung 02:
 
-- Nội dung 02:
-![uml class diagram](https://github.com/user-attachments/assets/c021caa8-5a29-4942-ae39-c9065db00e8d)
+![uml class diagram](https://github.com/user-attachments/assets/b2452b72-b4fd-4796-8dd6-db3ceb6f89d7)
+
+
+
 
 
 Nội dung 03:
-![uml sequence diagram](https://github.com/user-attachments/assets/9b9e1179-8614-4176-bdb8-4734770ee1db)
+
+![uml sequence diagram](https://github.com/user-attachments/assets/7a270fea-41fc-4dfe-80d5-8cd43960732d)
