@@ -5,23 +5,29 @@ import com.example.demo.service.BorrowService;
 import java.util.Scanner;
 
 public class BorrowServiceTest {
-    public void run() {
-        BorrowService service = new BorrowService();
+    public static void run() {
         Scanner sc = new Scanner(System.in);
+        BorrowService borrowService = new BorrowService();
 
         while (true) {
-            System.out.println("\n=== Menu Quản lý Mượn Sách ===");
-            System.out.println("1. Thêm phiếu mượn");
-            System.out.println("2. Xem danh sách mượn sách hôm nay");
-            System.out.println("0. Quay lại");
-            System.out.print("Chọn: ");
-            int choice = Integer.parseInt(sc.nextLine());
+            System.out.println("\n----- MENU QUAN LY PHIEU MUON -----");
+            System.out.println("1. Them phieu muon");
+            System.out.println("2. Xem phieu muon hom nay");
+            System.out.println("3. Cap nhat phieu muon");
+            System.out.println("4. Xoa phieu muon");
+            System.out.println("0. Quay lai menu chinh");
+            System.out.print("Chon chuc nang: ");
+            String choice = sc.nextLine();
 
             switch (choice) {
-                case 1 -> service.addBorrowRecordFromKeyboard();
-                case 2 -> service.displayTodayBorrowRecords();
-                case 0 -> { return; }
-                default -> System.out.println("❌ Lựa chọn không hợp lệ.");
+                case "1" -> borrowService.addBorrowRecordFromKeyboard();
+                case "2" -> borrowService.displayTodayBorrowRecords();
+                case "3" -> borrowService.updateBorrowRecordFromKeyboard();
+                case "4" -> borrowService.deleteBorrowRecordById();
+                case "0" -> {
+                    return;
+                }
+                default -> System.out.println("Lua chon khong hop le. Vui long thu lai.");
             }
         }
     }
