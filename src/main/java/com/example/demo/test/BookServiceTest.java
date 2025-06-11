@@ -15,6 +15,8 @@ public class BookServiceTest {
             System.out.println("2. Xem danh sach sach");
             System.out.println("3. Cap nhat sach");
             System.out.println("4. Xoa sach");
+            System.out.println("5. Loc sach theo the loai");
+            System.out.println("6. Loc sach theo tac gia");
             System.out.println("0. Quay lai menu chinh");
             System.out.print("Chon chuc nang: ");
             String choice = sc.nextLine();
@@ -24,6 +26,8 @@ public class BookServiceTest {
                 case "2" -> bookService.displayAllBooks();
                 case "3" -> bookService.updateBookFromKeyboard();
                 case "4" -> bookService.deleteBookById();
+                case "5" -> bookService.filterBooksByCategory();
+                case "6" -> bookService.filterBooksByAuthor();
                 case "0" -> {
                     return;
                 }
