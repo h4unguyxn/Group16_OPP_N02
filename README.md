@@ -32,4 +32,5 @@ Nội dung 02:
 
 Nội dung 03:
 
-![uml sequence diagram](https://github.com/user-attachments/assets/7a270fea-41fc-4dfe-80d5-8cd43960732d)
+
+![XP2_Ri8m48TtFyMDL2elm53HFmjI4QBfLZ4Onn0hZWts6SGJTExG1q1TEw2EeAf39DuZRz9B89MWgPh1bkv-ttVnTJroXo7J31Lg2O_5xjLCOHxoDNPWI1UWozzD0jb-K-pU3FXyBH8gMeebnUuPaCwNYYcsrDVv9vNs6rWewXh6k43h8C8GIuDiHkEKK3Dk4ExLs76twdF3fzATj6wiJSyAp](https://github.com/user-attachments/assets/28a60bb8-5b4c-43af-a6fb-03a5f3c9a512)
