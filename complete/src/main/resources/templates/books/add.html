@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sách mới</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-primary">➕ Thêm sách mới</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form th:action="@{/books/add}" th:object="${book}" method="post" class="card p-4 shadow">
+
+                <div class="mb-3">
+                    <label for="id" class="form-label fw-bold">Mã sách (ID):</label>
+                    <input type="text" th:field="*{id}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="title" class="form-label fw-bold">Tiêu đề:</label>
+                    <input type="text" th:field="*{title}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="author" class="form-label fw-bold">Tác giả:</label>
+                    <input type="text" th:field="*{author}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="genre" class="form-label fw-bold">Thể loại:</label>
+                    <input type="text" th:field="*{genre}" class="form-control" required>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4">💾 Lưu</button>
+                    <a href="/books" class="btn btn-secondary px-4">❌ Hủy</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

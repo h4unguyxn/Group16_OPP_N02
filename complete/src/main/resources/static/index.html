@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Thư viện</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex; /* Use Flexbox */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center horizontally */
+            height: 100vh; /* Full viewport height */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #fdfefe);
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0077cc;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: row; /* Align cards in a row */
+            gap: 30px; /* Space between cards */
+            justify-content: center; /* Center cards horizontally */
+            align-items: stretch; /* Stretch cards to the same height */
+            flex-grow: 1; /* Allow grid to grow and take available space */
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            flex: 1 1 250px; /* Allow cards to grow and shrink */
+            max-width: 250px; /* Set a maximum width */
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; /* Use flexbox for card content */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center content vertically */
+            height: 200px; /* Set a fixed height for the cards */
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+
+        .card h4 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 90%; /* Make cards responsive on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Hệ thống Quản lý Thư viện</h1>
+
+    <div class="grid">
+
+        <a href="/books" class="card-link">
+            <div class="card">
+                <div class="icon">📖</div>
+                <h4>Quản lý Sách</h4>
+            </div>
+        </a>
+
+        <a href="/students" class="card-link">
+            <div class="card">
+                <div class="icon">🎓</div>
+                <h4>Quản lý Sinh viên</h4>
+            </div>
+        </a>
+
+        <a href="/borrowrecords" class="card-link">
+            <div class="card">
+                <div class="icon">📄</div>
+                <h4>Quản lý Phiếu mượn</h4>
+            </div>
+        </a>
+
+    </div>
+
+</body>
+</html>
