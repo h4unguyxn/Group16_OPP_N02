@@ -1,5 +1,5 @@
 Nội dung 01:
-Xây dựng ứng dụng quản lý thư viện
+Xây dựng ứng dụng quản lý thư viện sách
 Yêu cầu:
 - Giao diện Java Spring Boot.
 - Có chức năng quản lý sách.
