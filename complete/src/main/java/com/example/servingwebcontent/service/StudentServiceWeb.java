@@ -11,54 +11,29 @@ public class StudentServiceWeb {
 
     private final StudentRepository repository;
 
-    public StudentServiceWeb() {
-        this.repository = new StudentRepository();
+    public StudentServiceWeb(StudentRepository repository) {
+        this.repository = repository;
     }
 
     public void addStudent(Student student) {
-        try {
-            repository.add(student);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
+        repository.save(student);
     }
 
     public void updateStudent(String id, Student updatedStudent) {
-        try {
-            repository.update(id, updatedStudent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        if (repository.existsById(id)) {
+            repository.save(updatedStudent);
         }
     }
 
     public void deleteStudentById(String id) {
-        try {
-            repository.delete(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
+        repository.deleteById(id);
     }
 
     public List<Student> getAllStudents() {
-        try {
-            return repository.getAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of(); // trả về danh sách rỗng nếu có lỗi
-        } finally {
-        }
+        return repository.findAll();
     }
 
     public Student findStudentById(String id) {
-        try {
-            return repository.findById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; // trả về null nếu có lỗi
-        } finally {
-        }
+        return repository.findById(id).orElse(null);
     }
 }

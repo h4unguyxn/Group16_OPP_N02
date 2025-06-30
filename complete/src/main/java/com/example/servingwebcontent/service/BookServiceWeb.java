@@ -11,54 +11,37 @@ public class BookServiceWeb {
 
     private final BookRepository repository;
 
-    public BookServiceWeb() {
-        this.repository = new BookRepository();
+    public BookServiceWeb(BookRepository repository) {
+        this.repository = repository;
     }
 
     public void addBook(Book book) {
-        try {
-            repository.add(book);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
+        repository.save(book);
     }
 
     public void updateBook(String id, Book updatedBook) {
-        try {
-            repository.update(id, updatedBook);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        if (repository.existsById(id)) {
+            repository.save(updatedBook);
         }
     }
 
     public void deleteBookById(String id) {
-        try {
-            repository.delete(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
+        repository.deleteById(id);
     }
 
     public List<Book> getAllBooks() {
-        try {
-            return repository.getAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of(); // Trả về danh sách rỗng nếu lỗi
-        } finally {
-        }
+        return repository.findAll();
     }
 
     public Book findBookById(String id) {
-        try {
-            return repository.findById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; // Trả về null nếu lỗi
-        } finally {
-        }
+        return repository.findById(id).orElse(null);
+    }
+
+    public List<Book> filterByGenre(String genre) {
+        return repository.findByGenreContainingIgnoreCase(genre);
+    }
+
+    public List<Book> filterByAuthor(String author) {
+        return repository.findByAuthorContainingIgnoreCase(author);
     }
 }

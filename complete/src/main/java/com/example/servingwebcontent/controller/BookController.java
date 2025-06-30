@@ -23,13 +23,12 @@ public class BookController {
     @GetMapping
     public String listBooks(Model model) {
         try {
-            model.addAttribute("books", bookService.getAllBooks());
+            List<Book> books = bookService.getAllBooks();
+            model.addAttribute("books", books);
             return "books/list";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
-
         }
     }
 
@@ -41,10 +40,7 @@ public class BookController {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
-            
         }
-        
     }
 
     @PostMapping("/add")
@@ -55,10 +51,7 @@ public class BookController {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
-
         }
-
     }
 
     @GetMapping("/edit/{id}")
@@ -73,10 +66,7 @@ public class BookController {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
-
         }
-        
     }
 
     @PostMapping("/edit")
@@ -87,7 +77,6 @@ public class BookController {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
         }
     }
 
@@ -99,32 +88,33 @@ public class BookController {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
         }
     }
 
-    // Lọc sách (tùy chọn mở rộng)
     @GetMapping("/filter")
     public String filterBooks(@RequestParam(required = false) String genre,
-                               @RequestParam(required = false) String author,
-                               Model model) {
+                              @RequestParam(required = false) String author,
+                              Model model) {
         try {
-
-        
             List<Book> books = bookService.getAllBooks();
-            if (genre != null && !genre.isEmpty()) {
-                books = books.stream().filter(b -> b.getGenre().equalsIgnoreCase(genre)).toList();
+
+            if (genre != null && !genre.isBlank()) {
+                books = books.stream()
+                        .filter(b -> b.getGenre() != null && b.getGenre().equalsIgnoreCase(genre))
+                        .toList();
             }
-            if (author != null && !author.isEmpty()) {
-                books = books.stream().filter(b -> b.getAuthor().equalsIgnoreCase(author)).toList();
+
+            if (author != null && !author.isBlank()) {
+                books = books.stream()
+                        .filter(b -> b.getAuthor() != null && b.getAuthor().equalsIgnoreCase(author))
+                        .toList();
             }
+
             model.addAttribute("books", books);
             return "books/list";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-        } finally {
-            
         }
     }
 }

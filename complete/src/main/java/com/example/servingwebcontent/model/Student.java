@@ -1,11 +1,20 @@
 package com.example.servingwebcontent.model;
 
-import com.example.servingwebcontent.common.Identifiable;
-import java.io.Serializable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
-public class Student implements Serializable, Identifiable {
+@Entity
+@Table(name = "students")
+public class Student {
+
+    @Id
     private String id;
+
+    @Column(nullable = false)
     private String name;
+
     private String email;
 
     public Student() {}

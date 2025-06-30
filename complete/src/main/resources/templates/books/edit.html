@@ -3,52 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <title>Chỉnh sửa sách</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
+        }
+
         .card {
-            border-radius: 15px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input:read-only {
+            background: #f8fafc;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            color: #9ca3af;
+        }
+
+        .form-footer {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 24px;
+            margin-top: 32px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+                max-width: 100%;
+            }
+
+            .card {
+                padding: 24px 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Loading state */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+        }
+
+        /* Success message */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 1px solid;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #15803d;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
         }
     </style>
 </head>
 <body>
-<div class="container py-5">
-    <h2 class="mb-4 text-center text-primary">✏️ Chỉnh sửa sách</h2>
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="/">🏠 Trang chủ</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="/books">📚 Danh sách sách</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>✏️ Chỉnh sửa</span>
+        </nav>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form th:action="@{/books/edit}" th:object="${book}" method="post" class="card p-4 shadow">
+        <!-- Header -->
+        <div class="header">
+            <h2>✏️ Chỉnh sửa Sách</h2>
+        </div>
 
-                <div class="mb-3">
-                    <label for="id" class="form-label fw-bold">Mã sách (ID):</label>
-                    <input type="text" th:field="*{id}" class="form-control" readonly>
+        <!-- Edit Form -->
+        <div class="card">
+            <form th:action="@{/books/edit}" th:object="${book}" method="post">
+                <div class="form-group">
+                    <label for="id" class="form-label">Mã sách (ID)</label>
+                    <input type="text" 
+                           id="id"
+                           th:field="*{id}" 
+                           class="form-input" 
+                           readonly>
                 </div>
 
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-bold">Tiêu đề:</label>
-                    <input type="text" th:field="*{title}" class="form-control" required>
+                <div class="form-group">
+                    <label for="title" class="form-label">Tiêu đề</label>
+                    <input type="text" 
+                           id="title"
+                           th:field="*{title}" 
+                           class="form-input" 
+                           placeholder="Nhập tiêu đề sách"
+                           required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="author" class="form-label fw-bold">Tác giả:</label>
-                    <input type="text" th:field="*{author}" class="form-control" required>
+                <div class="form-group">
+                    <label for="author" class="form-label">Tác giả</label>
+                    <input type="text" 
+                           id="author"
+                           th:field="*{author}" 
+                           class="form-input" 
+                           placeholder="Nhập tên tác giả"
+                           required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="genre" class="form-label fw-bold">Thể loại:</label>
-                    <input type="text" th:field="*{genre}" class="form-control" required>
+                <div class="form-group">
+                    <label for="genre" class="form-label">Thể loại</label>
+                    <input type="text" 
+                           id="genre"
+                           th:field="*{genre}" 
+                           class="form-input" 
+                           placeholder="Nhập thể loại sách"
+                           required>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success px-4">💾 Cập nhật</button>
-                    <a href="/books" class="btn btn-secondary px-4">❌ Hủy</a>
+                <div class="form-footer">
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-success">
+                            💾 Cập nhật
+                        </button>
+                        <a href="/books" class="btn btn-secondary">
+                            ❌ Hủy bỏ
+                        </a>
+                    </div>
                 </div>
-
             </form>
         </div>
     </div>
-</div>
+
+    <script>
+        // Form validation and user experience enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                // Add loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ Đang cập nhật...';
+                
+                // Re-enable after a delay (in case of validation errors)
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '💾 Cập nhật';
+                }, 3000);
+            });
+
+            // Enhanced input focus effects
+            const inputs = form.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                if (!input.readOnly) {
+                    input.addEventListener('focus', function() {
+                        this.parentElement.style.transform = 'translateY(-2px)';
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.parentElement.style.transform = 'translateY(0)';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

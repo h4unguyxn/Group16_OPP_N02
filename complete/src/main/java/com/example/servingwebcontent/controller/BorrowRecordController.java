@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/borrowrecords")
@@ -28,34 +29,32 @@ public class BorrowRecordController {
         this.studentService = studentService;
     }
 
-    // Hiển thị danh sách phiếu mượn
     @GetMapping
     public String listBorrowRecords(Model model) {
         try {
-            model.addAttribute("borrowrecords", borrowRecordService.getAllBorrowRecords());
-            System.out.println(">>> Đang hiển thị danh sách phiếu mượn:");
-            borrowRecordService.getAllBorrowRecords().forEach(System.out::println);
+            List<BorrowRecord> records = borrowRecordService.getAllBorrowRecords();
+            model.addAttribute("borrowrecords", records);
+            return "borrowrecords/list";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "Không thể tải danh sách phiếu mượn.");
+            return "error";
         } finally {
         }
-        return "borrowrecords/list";
     }
 
-    // Hiển thị form thêm
     @GetMapping("/add")
     public String showAddForm(Model model) {
         try {
             model.addAttribute("borrowrecord", new BorrowRecord());
+            return "borrowrecords/add";
         } catch (Exception e) {
             e.printStackTrace();
+            return "error";
         } finally {
         }
-        return "borrowrecords/add";
     }
 
-    // Xử lý form thêm
     @PostMapping("/add")
     public String addBorrowRecord(@ModelAttribute("borrowrecord") BorrowRecord borrowRecord, Model model) {
         try {
@@ -70,7 +69,6 @@ public class BorrowRecordController {
             }
 
             borrowRecordService.addBorrowRecord(borrowRecord);
-            System.out.println(">>> Đã thêm phiếu mượn: " + borrowRecord);
             return "redirect:/borrowrecords";
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,23 +78,22 @@ public class BorrowRecordController {
         }
     }
 
-    // Hiển thị form chỉnh sửa
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) {
         try {
-            BorrowRecord borrowRecord = borrowRecordService.findBorrowRecordById(id);
-            if (borrowRecord == null) {
+            BorrowRecord record = borrowRecordService.findBorrowRecordById(id);
+            if (record == null) {
                 return "redirect:/borrowrecords";
             }
-            model.addAttribute("borrowrecord", borrowRecord);
+            model.addAttribute("borrowrecord", record);
+            return "borrowrecords/edit";
         } catch (Exception e) {
             e.printStackTrace();
+            return "error";
         } finally {
         }
-        return "borrowrecords/edit";
     }
 
-    // Xử lý chỉnh sửa
     @PostMapping("/edit")
     public String updateBorrowRecord(@ModelAttribute("borrowrecord") BorrowRecord borrowRecord, Model model) {
         try {
@@ -110,15 +107,31 @@ public class BorrowRecordController {
         }
     }
 
-    // Xóa phiếu mượn
     @GetMapping("/delete/{id}")
     public String deleteBorrowRecord(@PathVariable String id) {
         try {
             borrowRecordService.deleteBorrowRecordById(id);
+            return "redirect:/borrowrecords";
         } catch (Exception e) {
             e.printStackTrace();
+            return "error";
         } finally {
         }
-        return "redirect:/borrowrecords";
+    }
+
+    @GetMapping("/filter")
+    public String filterBorrowRecords(@RequestParam(required = false) String studentId,
+                                      @RequestParam(required = false) String bookId,
+                                      Model model) {
+        try {
+            List<BorrowRecord> filteredRecords = borrowRecordService.filterBorrowRecords(studentId, bookId);
+            model.addAttribute("borrowrecords", filteredRecords);
+            return "borrowrecords/list";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi khi lọc phiếu mượn.");
+            return "error";
+        } finally {
+        }
     }
 }

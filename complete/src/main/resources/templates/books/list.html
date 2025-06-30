@@ -3,66 +3,495 @@
 <head>
     <meta charset="UTF-8">
     <title>Danh sách sách</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
-        .card { border-radius: 15px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            color: #9ca3af;
+        }
+
+        .stats-section {
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 8px;
+            padding: 12px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 1.2rem;
+        }
+
+        .stat-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .stat-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn-outline:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .filter-card {
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .filter-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f8fafc;
+        }
+
+        .results-info {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .results-count {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: #f8fafc;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        .table td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #374151;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            color: #9ca3af;
+        }
+
+        .empty-text {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtext {
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .stats-section {
+                margin-bottom: 12px;
+            }
+
+            .stat-card {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+
+            .stat-number {
+                font-size: 1.1rem;
+            }
+
+            .filter-form {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+
+            .table-container {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .table,
+            .table thead,
+            .table tbody,
+            .table th,
+            .table td,
+            .table tr {
+                display: block;
+            }
+
+            .table thead {
+                display: none;
+            }
+
+            .table tr {
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                margin-bottom: 16px;
+                padding: 16px;
+            }
+
+            .table td {
+                border: none;
+                padding: 8px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .table td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #374151;
+                flex: 1;
+            }
+
+            .table td:last-child {
+                justify-content: center;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid #f1f5f9;
+            }
+
+            .table td:last-child:before {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container py-5">
+    <div class="container">
 
-    <div class="d-flex justify-content-between mb-4">
-        <h2 class="text-primary">📚 Danh sách Sách</h2>
-        <a href="/" class="btn btn-outline-primary">🏠 Trang chủ</a>
-    </div>
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="/">🏠 Trang chủ</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>📚 Danh sách sách</span>
+        </nav>
 
-    <!-- Form lọc -->
-    <div class="card p-4 shadow mb-4">
-        <form th:action="@{/books/filter}" method="get" class="row g-3 align-items-center">
-            <div class="col-md-4">
-                <input type="text" name="author" class="form-control" placeholder="🔍 Lọc theo tác giả">
+        <div class="header">
+            <h2>📚 Danh sách Sách</h2>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="stats-section" th:if="${books != null}">
+            <div class="stat-card">
+                <span class="stat-icon">📚</span>
+                <span class="stat-text">Tổng số lượng sách:</span>
+                <span class="stat-number" th:text="${#aggregates.sum(books.![quantity ?: 0])}">0</span>
             </div>
-            <div class="col-md-4">
-                <input type="text" name="genre" class="form-control" placeholder="🔍 Lọc theo thể loại">
-            </div>
-            <div class="col-md-4 d-flex gap-2">
-                <button type="submit" class="btn btn-primary w-100">Lọc</button>
-                <a href="/books" class="btn btn-secondary w-100">Hiển thị tất cả</a>
-                <a href="/books/add" class="btn btn-success w-100">➕ Thêm sách</a>
-            </div>
-        </form>
-    </div>
+        </div>
 
-    <!-- Danh sách sách -->
-    <div class="card shadow">
-        <table class="table table-hover mb-0">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Tiêu đề</th>
-                <th>Tác giả</th>
-                <th>Thể loại</th>
-                <th class="text-center">Hành động</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.id}"></td>
-                <td th:text="${book.title}"></td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.genre}"></td>
-                <td class="text-center">
-                    <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm btn-warning me-2">✏️</a>
-                    <a th:href="@{/books/delete/{id}(id=${book.id})}" 
-                       class="btn btn-sm btn-danger" 
-                       onclick="return confirm('Bạn có chắc muốn xóa sách này?');">🗑️</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <!-- Filter Form -->
+        <div class="card filter-card">
+            <form th:action="@{/books/filter}" method="get" class="filter-form">
+                <div class="form-group">
+                    <label class="form-label">Tác giả</label>
+                    <input type="text" name="author" class="form-input" placeholder="Nhập tên tác giả" th:value="${param.author}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Thể loại</label>
+                    <input type="text" name="genre" class="form-input" placeholder="Nhập thể loại" th:value="${param.genre}">
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">🔍 Lọc</button>
+                    <a href="/books" class="btn btn-secondary">Tất cả</a>
+                    <a href="/books/add" class="btn btn-success">➕ Thêm</a>
+                </div>
+            </form>
+        </div>
 
-</div>
+        <!-- Books Table -->
+        <div class="card">
+            <!-- Results Header -->
+            <div class="results-header" th:if="${books != null and !books.isEmpty()}">
+                <div class="results-info">
+                    Hiển thị <span class="results-count" th:text="${#lists.size(books)}">0</span> kết quả
+                    <span th:if="${param.author != null or param.genre != null}">
+                        cho bộ lọc: 
+                        <span th:if="${param.author != null}" th:text="'Tác giả: ' + ${param.author}"></span>
+                        <span th:if="${param.author != null and param.genre != null}"> - </span>
+                        <span th:if="${param.genre != null}" th:text="'Thể loại: ' + ${param.genre}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="table-container" th:if="${books != null and !books.isEmpty()}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tiêu đề</th>
+                            <th>Tác giả</th>
+                            <th>Thể loại</th>
+                            <th>Số lượng</th>
+                            <th style="text-align: center;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${books}">
+                            <td th:text="${book.id}" data-label="ID"></td>
+                            <td th:text="${book.title}" data-label="Tiêu đề"></td>
+                            <td th:text="${book.author}" data-label="Tác giả"></td>
+                            <td th:text="${book.genre}" data-label="Thể loại"></td>
+                            <td th:text="${book.quantity != null ? book.quantity : 0}" data-label="Số lượng" style="text-align: left;"></td>
+                            <td class="actions">
+                                <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning">✏️</a>
+                                <a th:href="@{/books/delete/{id}(id=${book.id})}" 
+                                   class="btn btn-danger" 
+                                   onclick="return confirm('Bạn có chắc muốn xóa sách này?');">🗑️</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" th:if="${books == null or books.isEmpty()}">
+                <div class="empty-icon">📚</div>
+                <div class="empty-text">Chưa có sách nào</div>
+                <div class="empty-subtext">Hãy thêm sách đầu tiên vào thư viện</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,14 +1,27 @@
 package com.example.servingwebcontent.model;
 
-import com.example.servingwebcontent.common.Identifiable;
-import java.io.Serializable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
 import java.time.LocalDate;
 
-public class BorrowRecord implements Serializable, Identifiable {
+@Entity
+@Table(name = "borrow_records")
+public class BorrowRecord {
+
+    @Id
     private String id;
+
+    @Column(nullable = false)
     private String studentId;
+
+    @Column(nullable = false)
     private String bookId;
+
     private LocalDate borrowDate;
+    private LocalDate returnDate;
 
     public BorrowRecord() {}
 
@@ -27,17 +40,20 @@ public class BorrowRecord implements Serializable, Identifiable {
     public void setId(String id) { this.id = id; }
 
     public String getStudentId() { return studentId; }
-    public void setStudentId(String studentId) { 
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
-        this.id = generateId();
+        this.id = generateId(); // cập nhật ID nếu thay đổi studentId
     }
 
     public String getBookId() { return bookId; }
-    public void setBookId(String bookId) { 
+    public void setBookId(String bookId) {
         this.bookId = bookId;
-        this.id = generateId();
+        this.id = generateId(); // cập nhật ID nếu thay đổi bookId
     }
 
     public LocalDate getBorrowDate() { return borrowDate; }
     public void setBorrowDate(LocalDate borrowDate) { this.borrowDate = borrowDate; }
+
+    public LocalDate getReturnDate() { return returnDate; }
+    public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
 }
