@@ -6,7 +6,7 @@ Xây dựng ứng dụng quản lý thư viện sách
 
 ## Các liên kết quan trọng 
 - 🔗 [GitHub Repository](https://github.com/h4unguyxn/Group16_OPP_N02)
-- Video demo ứng dụng:(https://www.youtube.com/watch?v=1g-GG6KIdGo)
+- [Video demo ứng dụng]:(https://www.youtube.com/watch?v=1g-GG6KIdGo)
 ## Yêu cầu:
 - Giao diện Java Spring Boot.
 - Có chức năng quản lý sách.
